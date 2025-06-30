@@ -28,17 +28,14 @@ def lex(code):
         kind = match.lastgroup
         value = match.group()
 
-        if kind == 'NUMBER':
-            value = float(value) if '.' in value else int(value)
-            yield Token(kind, value)
-        elif kind == 'ID':
-            token_type = value.upper() if value in KEYWORDS else 'ID'
-            yield Token(token_type, value)
-        elif kind == 'OP':
-            yield Token(kind, value)
-        elif kind in ('NEWLINE', 'SKIP'):
-            continue
-        elif kind in ('LPAREN', 'RPAREN'):
-            yield Token(kind, value)
-        elif kind == 'MISMATCH':
-            raise SyntaxError(f'Unexpected character: {value!r}')
+        match kind:
+            case 'NUMBER':
+                yield Token(kind, float(value) if '.' in value else int(value))
+            case 'ID':
+                yield Token(value.upper() if value in KEYWORDS else 'ID', value)
+            case 'NEWLINE' | 'SKIP':
+                continue
+            case 'LPAREN' | 'RPAREN' | 'OP':
+                yield Token(kind, value)
+            case 'MISMATCH':
+                raise SyntaxError(f'Unexpected character: {value!r}')
