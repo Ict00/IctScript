@@ -1,12 +1,14 @@
 """Abstract Syntax Tree classes for Howdy Script programming language"""
 
 
-class XoBase: # Базовый класс для всех узлов AST
+class XoBase:
     def __init__(self, _eval: callable):
         self._eval = _eval
 
 
 class XoNumber(XoBase):
+    __match_args__ = ("value",)
+
     def __init__(self, value):
         super().__init__(
             _eval=lambda x, node: node.value
@@ -15,6 +17,8 @@ class XoNumber(XoBase):
 
 
 class XoVariable(XoBase):
+    __match_args__ = ("name",)
+
     def __init__(self, name):
         def _eval(x, node):
             if node.name in x.env:
@@ -28,6 +32,8 @@ class XoVariable(XoBase):
 
 
 class XoBinOp(XoBase):
+    __match_args__ = ("left", "op", "right")
+
     def __init__(self, left, op, right):
         def _eval(x, node):
             _left = x.eval(node.left)
@@ -52,6 +58,8 @@ class XoBinOp(XoBase):
 
 
 class XoAssign(XoBase):
+    __match_args__ = ("name", "expr")
+
     def __init__(self, name, expr):
         super().__init__(
             _eval=lambda x, node: x.env.update({node.name: x.eval(node.expr)}) or None
@@ -61,6 +69,8 @@ class XoAssign(XoBase):
 
 
 class XoEcho(XoBase):
+    __match_args__ = ("expr",)
+
     def __init__(self, expr):
         super().__init__(
             _eval=lambda x, node: print(x.eval(node.expr))
@@ -69,6 +79,8 @@ class XoEcho(XoBase):
 
 
 class XoProgram(XoBase):
+    __match_args__ = ("statements",)
+
     def __init__(self, statements):
         super().__init__(
             _eval=lambda x, node: [x.eval(stmt) for stmt in node.statements]

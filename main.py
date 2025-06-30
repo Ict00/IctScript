@@ -1,6 +1,6 @@
 from core.lexer import lex
 from core.parser import Parser
-from core.interpreter import Interpreter
+from core.utils import print_ast
 
 if __name__ == '__main__':
     code = open('test.xo', 'r').read()
@@ -9,5 +9,4 @@ if __name__ == '__main__':
     parser = Parser(tokens)
     ast = parser.parse() # ast дерево
 
-    interpreter = Interpreter()
-    interpreter.eval(ast) # интерпретируем код
+    print_ast(ast)
