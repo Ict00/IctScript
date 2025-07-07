@@ -1,5 +1,5 @@
 """Interpreter for Howdy Script programming language."""
-
+#VARS = {"": ""}
 
 class Interpreter:
     def __init__(self):

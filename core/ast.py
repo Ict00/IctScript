@@ -61,9 +61,10 @@ class IctAssign(IctBase):
     __match_args__ = ("name", "expr")
 
     def __init__(self, name, expr):
-        super().__init__(
-            _eval=lambda x, node: x.env.update({node.name: x.eval(node.expr)}) or None
-        )
+        def e(x, node):
+           x.env[node.name] = x.eval(node.expr) or None
+ 
+        super().__init__(_eval=e)
         self.name = name
         self.expr = expr
 
