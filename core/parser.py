@@ -33,8 +33,8 @@ class Parser:
 
 
     def parse(self):
-        if not (self.peek() and self.peek().type == 'HOWDY'):
-            raise SyntaxError(f'Script must start with the HOWDY keyword')
+        if not (self.peek() and self.peek().type == 'ICT'):
+            raise SyntaxError(f'Script must start with the ICT keyword')
         self.advance()
 
         statements = []
