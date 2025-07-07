@@ -1,12 +1,12 @@
 """Parser for Howdy Script programming language"""
 
 from core.ast import (
-    XoAssign,
-    XoBinOp,
-    XoEcho,
-    XoNumber,
-    XoProgram,
-    XoVariable
+    IctAssign,
+    IctBinOp,
+    IctEcho,
+    IctNumber,
+    IctProgram,
+    IctVariable
 )
 
 class Parser:
@@ -41,7 +41,7 @@ class Parser:
         while self.peek():
             statements.append(self.statement())
 
-        return XoProgram(statements)
+        return IctProgram(statements)
 
 
     def statement(self):
@@ -51,7 +51,7 @@ class Parser:
         elif tok.type == 'ECHO':
             self.advance()
             expr = self.expr()
-            return XoEcho(expr)
+            return IctEcho(expr)
         else:
             return self.expr()
 
@@ -63,7 +63,7 @@ class Parser:
             self.peek().value == ':='):
             self.advance()
             expr = self.expr()
-            return XoAssign(name, expr)
+            return IctAssign(name, expr)
 
         raise SyntaxError(f'Invalid assignment {name}')
 
@@ -77,7 +77,7 @@ class Parser:
         if tok and tok.type == 'OP' and tok.value in ('+', '-'):
             self.advance()
             right = self.term()
-            return self._term_tail(XoBinOp(left, tok.value, right))
+            return self._term_tail(IctBinOp(left, tok.value, right))
 
         return left
 
@@ -91,7 +91,7 @@ class Parser:
         if tok and tok.type == 'OP' and tok.value in ('*', '/'):
             self.advance()
             right = self.factor()
-            return self._factor_tail(XoBinOp(left, tok.value, right))
+            return self._factor_tail(IctBinOp(left, tok.value, right))
 
         return left
 
@@ -100,10 +100,10 @@ class Parser:
         tok = self.peek()
         if tok.type == 'NUMBER':
             self.advance()
-            return XoNumber(tok.value)
+            return IctNumber(tok.value)
         elif tok.type == 'ID':
             self.advance()
-            return XoVariable(tok.value)
+            return IctVariable(tok.value)
         elif tok.type == 'LPAREN':
             self.advance()
             expr = self.expr()

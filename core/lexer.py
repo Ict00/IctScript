@@ -5,7 +5,7 @@ from collections import namedtuple
 
 Token = namedtuple('Token', ['type', 'value'])
 
-KEYWORDS = {'echo', 'HOWDY'}
+KEYWORDS = {'echo', 'ICT'}
 
 TOKEN_SPECIFICATION = [
     ('NUMBER', r'\d+(\.\d*)?'), # числа

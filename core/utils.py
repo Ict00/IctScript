@@ -1,39 +1,39 @@
 from core.ast import (
-    XoAssign,
-    XoBinOp,
-    XoEcho,
-    XoNumber,
-    XoProgram,
-    XoVariable
+    IctAssign,
+    IctBinOp,
+    IctEcho,
+    IctNumber,
+    IctProgram,
+    IctVariable
 )
 
 def print_ast(node, indent=0):
     prefix = '  ' * indent
 
     match node:
-        case XoProgram(statements):
-            print(f'{prefix}XoProgram')
+        case IctProgram(statements):
+            print(f'{prefix}IctProgram')
             for stmt in statements:
                 print_ast(stmt, indent + 1)
 
-        case XoAssign(name, expr):
-            print(f'{prefix}XoAssign {name}')
+        case IctAssign(name, expr):
+            print(f'{prefix}IctAssign {name}')
             print_ast(expr, indent + 1)
 
-        case XoEcho(expr):
-            print(f'{prefix}XoEcho')
+        case IctEcho(expr):
+            print(f'{prefix}IctEcho')
             print_ast(expr, indent + 1)
 
-        case XoBinOp(left, op, right):
-            print(f'{prefix}XoBinOp {op}')
+        case IctBinOp(left, op, right):
+            print(f'{prefix}IctBinOp {op}')
             print_ast(left, indent + 1)
             print_ast(right, indent + 1)
 
-        case XoNumber(value):
-            print(f'{prefix}XoNumber {value}')
+        case IctNumber(value):
+            print(f'{prefix}IctNumber {value}')
 
-        case XoVariable(name):
-            print(f'{prefix}XoVariable {name}')
+        case IctVariable(name):
+            print(f'{prefix}IctVariable {name}')
 
         case _:
             print(f'{prefix}Unknown node: {node}')

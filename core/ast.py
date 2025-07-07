@@ -1,12 +1,12 @@
 """Abstract Syntax Tree classes for Howdy Script programming language"""
 
 
-class XoBase:
+class IctBase:
     def __init__(self, _eval: callable):
         self._eval = _eval
 
 
-class XoNumber(XoBase):
+class IctNumber(IctBase):
     __match_args__ = ("value",)
 
     def __init__(self, value):
@@ -16,7 +16,7 @@ class XoNumber(XoBase):
         self.value = value
 
 
-class XoVariable(XoBase):
+class IctVariable(IctBase):
     __match_args__ = ("name",)
 
     def __init__(self, name):
@@ -31,7 +31,7 @@ class XoVariable(XoBase):
         self.name = name
 
 
-class XoBinOp(XoBase):
+class IctBinOp(IctBase):
     __match_args__ = ("left", "op", "right")
 
     def __init__(self, left, op, right):
@@ -57,7 +57,7 @@ class XoBinOp(XoBase):
         self.right = right
 
 
-class XoAssign(XoBase):
+class IctAssign(IctBase):
     __match_args__ = ("name", "expr")
 
     def __init__(self, name, expr):
@@ -68,7 +68,7 @@ class XoAssign(XoBase):
         self.expr = expr
 
 
-class XoEcho(XoBase):
+class IctEcho(IctBase):
     __match_args__ = ("expr",)
 
     def __init__(self, expr):
@@ -78,7 +78,7 @@ class XoEcho(XoBase):
         self.expr = expr
 
 
-class XoProgram(XoBase):
+class IctProgram(IctBase):
     __match_args__ = ("statements",)
 
     def __init__(self, statements):
