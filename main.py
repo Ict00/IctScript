@@ -3,17 +3,6 @@ from core.parser import Parser
 from core.inter import *
 from core.ast import *
 
-
-def exec_ast(node):
-    inter = Interpreter()
-
-    match node:
-        case IctProgram(statements):
-            for stmt in statements:
-                exec_ast(stmt)
-        case _:
-            inter.eval(node)
-
 if __name__ == '__main__':
     code = open('test.ict', 'r').read()
 
@@ -24,5 +13,3 @@ if __name__ == '__main__':
     inter = Interpreter()
     
     inter.eval(ast)
-
-    #exec_ast(ast)
